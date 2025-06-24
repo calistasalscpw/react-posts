@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 const PostDetail = ()=> {
@@ -19,8 +19,9 @@ const PostDetail = ()=> {
     if (!post) return <p>Loading...</p>
 
     return(
-        <div>
-            {postId}
+        <div style={{padding: '20px'}}>
+            <h2>{post.title}</h2>
+            <p>{post.body}</p>
         </div>
     )
 }

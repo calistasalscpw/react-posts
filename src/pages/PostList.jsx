@@ -11,11 +11,12 @@ const PostList = () => {
     }, [])
     return(
         <div>
-            {posts.map((item, idx)=> {
-                <Link to={`/posts/${item.idx}`}>
-                    {`${item.idx} ${item.title}`}
+            {posts.map((item, idx)=> (
+                <Link key={item.id} to={`/posts/${item.id}`}>
+                    {`${item.id} ${item.title}`}
+                    <br />
                 </Link>
-            })}
+            ))}
         </div>
     )
 }
