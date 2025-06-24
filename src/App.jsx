@@ -6,12 +6,13 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import Home from './pages/Home'
 import PostList from './pages/PostList'
 import PostDetail from './pages/PostDetail'
+import Navigation from './components/Navigation';
 
 function App() {
 
   return (
       <BrowserRouter>
-      <div>Navigation bar is here</div>
+      <Navigation>Navigation bar is here</Navigation>
         <Routes>
           <Route path='/' element={<Home/>}/>
           <Route path='/posts' element={<PostList/>}/>
