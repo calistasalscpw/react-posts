@@ -4,7 +4,7 @@ const Home = ()=> {
     const {Title} = Typography
     
     return(
-        <div style={{alignItems: 'center', margin: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', minWidth: '100vw', minHeight:'100vh', backgroundColor: 'white'}}>
+        <div style={{alignItems: 'center', margin: 0, display: 'flex', flexDirection: 'column', justifyContent: 'center', minWidth: '100vw', minHeight:'100vh', backgroundColor: 'white'}}>
             <Title style={{color: '#2f27ce', fontWeight: '700'}}>
              Welcome to the Post Blog
             </Title>

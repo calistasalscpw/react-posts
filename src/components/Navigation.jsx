@@ -3,6 +3,8 @@ import styled from 'styled-components';
 
 const NavBar = styled.nav`
     background-color: #dedcff;
+    width: 100%;
+    marginL 0;
 `
 
 const NavList = styled.ul`
@@ -28,10 +30,17 @@ const NavLink = styled(Link)`
         color: #dedcff;
     }`
 
+const NavImg = styled.img`
+    justify-content: space-between;
+`
+
 const Navigation = () => {
     return(
         <NavBar>
             <NavList>
+                <NavItem>
+                    <NavImg src="https://upload.wikimedia.org/wikipedia/en/thumb/4/49/Seal_of_ASEAN.svg/1200px-Seal_of_ASEAN.svg.png" alt="logo" style={{width: '30px', height: '30px'}} />
+                </NavItem>
                 <NavItem>
                     <NavLink to={`/posts`}>Posts</NavLink>
                 </NavItem>
