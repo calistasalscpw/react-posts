@@ -12,7 +12,7 @@ function App() {
 
   return (
       <BrowserRouter>
-      <Navigation>Navigation bar is here</Navigation>
+      <Navigation/>
         <Routes>
           <Route path='/' element={<Home/>}/>
           <Route path='/posts' element={<PostList/>}/>
