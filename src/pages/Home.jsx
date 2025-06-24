@@ -1,7 +1,12 @@
+import {Typography} from 'antd';
+
 const Home = ()=> {
+    const Title = Typography
+    
     return(
         <div>
-            Home page
+            <Title></Title>
+             Home page
         </div>
     )
 }
