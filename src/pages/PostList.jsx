@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import { Typography } from "antd";
 import {Card} from 'antd';
 import styled from 'styled-components';
+import { Pagination } from 'antd';
 
 const DataLink = styled(Link)`
     text-decoration: none;
@@ -23,6 +24,7 @@ const PostList = () => {
     return(
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: 'white', minHeight: '100vh', minWidth: '100vw'}}>
             <Title>See what's happening around you!</Title>
+            {/* Getting each posts from API and displaying them in a list */}
             {posts.map((item)=> (
                 <Card style={{width: '80vw', color: '#050315'}}>
                     <DataLink key={item.id} to={`/posts/${item.id}`}>
@@ -31,6 +33,8 @@ const PostList = () => {
                     </DataLink>
                 </Card>
             ))}
+
+            <Pagination align="center" defaultCurrent={1} total={50} />
         </div>
     )
 }
