@@ -24,13 +24,15 @@ const PostDetail = ()=> {
             <p>{post.body}</p>
             <h3>Comments</h3>
             <ul>
-                {comments.map(comment => {
+                {/* with the comments that have been set using useEffect,
+                use map to get each comments */}
+                {comments.map(comment => (
                     <li key={comment.id} style={{marginBottom: '1rem'}}>
                         <strong>{comment.name}</strong>
                         <p>{comment.email}</p>
                         <p>{comment.body}</p>
                     </li>
-                })}
+                ))}
             </ul>
         </div>
     )
