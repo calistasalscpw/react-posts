@@ -8,11 +8,13 @@ import { Pagination } from 'antd';
 const DataLink = styled(Link)`
     text-decoration: none;
     font-size: 14px;
-    color: #050315`
+    color: #050315;
+    display: block`
 
 const PostList = () => {
     const [posts, setPosts] = useState([]);
     const {Title} = Typography; // for antd typography
+    const [currentPage, setCurrentPage] = useState(1)
 
     useEffect(()=> {
         fetch('https://jsonplaceholder.typicode.com/posts')
@@ -21,20 +23,26 @@ const PostList = () => {
 
         console.log(posts)
     }, [])
+
+    const pageSize = 10;
+
+    const getPaginatedData = (page) => {
+        const start = (page - 1) * pageSize;
+        return posts.slice(start, start + pageSize)
+    }
     return(
-        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: 'white', minHeight: '100vh', minWidth: '100vw'}}>
-            <Title>See what's happening around you!</Title>
+        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '#dedcff', minHeight: '100vh', minWidth: '100vw'}}>
+            <Title style={{color: '#2f27ce'}}>See what's happening around you!</Title>
             {/* Getting each posts from API and displaying them in a list */}
-            {posts.map((item)=> (
+            {getPaginatedData(currentPage).map((item)=> (
                 <Card style={{width: '80vw', color: '#050315'}}>
                     <DataLink key={item.id} to={`/posts/${item.id}`}>
                         {`${item.id} ${item.title}`}
-                        <br />
                     </DataLink>
                 </Card>
             ))}
 
-            <Pagination align="center" defaultCurrent={1} total={50} />
+            <Pagination align="center" current={currentPage} pageSize={pageSize} total={posts.length} onChange={(page) => setCurrentPage(page)} style={{margin: '2rem'}} />
         </div>
     )
 }
