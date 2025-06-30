@@ -17,7 +17,8 @@ const PostList = () => {
     const [currentPage, setCurrentPage] = useState(1)
 
     useEffect(()=> {
-        fetch('https://jsonplaceholder.typicode.com/posts')
+        // fetch('https://jsonplaceholder.typicode.com/posts')
+        fetch(`http://localhost:3000/posts`)
             .then(res=>res.json())
             .then(data=>setPosts(data))
 

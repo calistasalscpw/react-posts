@@ -9,18 +9,24 @@ app.use(express.json());
 //change
 
 const posts = [
-    {id: 1, title: 'first post', content: 'this is my first post'},
-    {id: 2, title: 'second post', content: 'this is my second post'},
-    {id: 3, title: 'third post', content: 'this is my third post'},
-    {id: 4, title: 'fourth post', content: 'this is my fourth post'},
+    {id: 1, title: 'first post', body: 'this is my first post'},
+    {id: 2, title: 'second post', body: 'this is my second post'},
+    {id: 3, title: 'third post', body: 'this is my third post'},
+    {id: 4, title: 'fourth post', body: 'this is my fourth post'},
 ]
 
 //change
 
+// const comments = [
+//     {id: 1, content: 'first comment', postId: 1},
+//     {id: 2, content: 'second comment', postId: 2},
+//     {id: 3, content: 'third comment', postId: 3}
+// ]
+
 const comments = [
-    {id: 1, content: 'first comment', postId: 1},
-    {id: 2, content: 'second comment', postId: 2},
-    {id: 3, content: 'third comment', postId: 3}
+    {id: 1, name: "Maria", email: "maria@gmail.com", body: 'first comment', postId: 1},
+    {id: 2, name: "Valencio", email: "valencio@gmail.com", body: 'second comment', postId: 2},
+    {id: 3, name: "Jinu", email: "jinu@gmail.com", body: 'third comment', postId: 3}
 ]
 
 // const comments = [
