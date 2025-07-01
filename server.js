@@ -1,3 +1,6 @@
+// express: A library to help you build APIs easily.
+// cors: Middleware to allow requests from other origins (e.g., your frontend website hosted elsewhere)
+
 import express from 'express';
 import cors from 'cors';
 
@@ -7,6 +10,8 @@ app.use(cors())
 app.use(express.json());
 
 //change
+// cors(): Lets other websites access your server (important for frontend-backend communication).
+// express.json(): Lets your server understand JSON input (e.g., in POST requests).
 
 const posts = [
     {id: 1, title: 'first post', body: 'this is my first post'},
@@ -26,7 +31,8 @@ const posts = [
 const comments = [
     {postId: 1, id: 1, name: "Maria", email: "maria@gmail.com", body: 'first comment'},
     {postId: 1, id: 2, name: "Valencio", email: "valencio@gmail.com", body: 'second comment'},
-    {postId: 2, id: 1, name: "Jinu", email: "jinu@gmail.com", body: 'third comment'}
+    {postId: 2, id: 1, name: "Jinu", email: "jinu@gmail.com", body: 'third comment ahay'},
+    {postId: 3, id: 1, name: "Jinu", email: "jinu@gmail.com", body: 'third comment'}
 ]
 
 // const comments = [
