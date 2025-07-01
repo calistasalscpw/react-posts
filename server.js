@@ -2,6 +2,7 @@
 // cors: Middleware to allow requests from other origins (e.g., your frontend website hosted elsewhere)
 
 import express from 'express';
+import {Router} from 'express';
 import cors from 'cors';
 
 const app = express();
@@ -59,6 +60,18 @@ app.get('/posts/:postId/comments', (req, res) => {
   const postComments = comments.filter(c => c.postId === Number(req.params.postId));
   res.json(postComments);
 });
+
+app.post('/posts', (req, res)=> {
+    const {title, content} = req.body;
+    const id = posts.length ? posts[posts.length - 1].id + 1 : 1;
+    const newPost = {
+        id,
+        title,
+        body: content
+    }
+    posts.push(newPost);
+    res.status(201).json(newPost);
+})
 
 app.listen(port, () => {
   console.log(`API server listening on port ${port}`);

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from 'styled-components';
-import {Card} from 'antd';
+import {Card, Button} from 'antd';
 
 const CommentList = styled.ul`
     list-style: none;
@@ -40,6 +40,7 @@ const PostDetail = ()=> {
         <div style={{padding: '20px', backgroundColor: 'white', color: '#050315'}}>
             <h2>{post.title}</h2>
             <p>{post.body}</p>
+            
             <Card title="Comments" style={{border: '1px solid #2f27ce'}}>
             <CommentList>
                 {/* with the comments that have been set using useEffect,
