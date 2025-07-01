@@ -7,6 +7,7 @@ import Home from './pages/Home'
 import PostList from './pages/PostList'
 import PostDetail from './pages/PostDetail'
 import Navigation from './components/Navigation';
+import PostCreate from './pages/PostCreate';
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
           <Route path='/' element={<Home/>}/>
           <Route path='/posts' element={<PostList/>}/>
           <Route path='/posts/:postId' element={<PostDetail/>}/>
+          <Route path='/posts/create' element={<PostCreate/>}/>
         </Routes>
       </BrowserRouter>
   )

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import {Link} from 'react-router-dom';
-import { Typography } from "antd";
+import {Link, useNavigate} from 'react-router-dom';
+import { Typography, Button } from "antd";
+import { PlusOutlined } from '@ant-design/icons';
 import {Card} from 'antd';
 import styled from 'styled-components';
 import { Pagination } from 'antd';
@@ -15,6 +16,7 @@ const PostList = () => {
     const [posts, setPosts] = useState([]);
     const {Title} = Typography; // for antd typography
     const [currentPage, setCurrentPage] = useState(1)
+    const navigate = useNavigate();
 
     useEffect(()=> {
         // fetch('https://jsonplaceholder.typicode.com/posts')
@@ -34,6 +36,7 @@ const PostList = () => {
     return(
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '#dedcff', minHeight: '100vh', minWidth: '100vw'}}>
             <Title style={{color: '#2f27ce'}}>See what's happening around you!</Title>
+            <Button align="right" type="primary" icon={<PlusOutlined />} style={{display: 'flex'}} onClick={() => navigate('/posts/create')}>Add New Post</Button>
             {/* Getting each posts from API and displaying them in a list */}
             {getPaginatedData(currentPage).map((item)=> (
                 <Card style={{width: '80vw', color: '#050315'}}>

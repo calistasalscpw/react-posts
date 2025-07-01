@@ -1,4 +1,4 @@
-import {Typography} from 'antd';
+import {Typography, Button} from 'antd';
 
 const Home = ()=> {
     const {Title} = Typography
