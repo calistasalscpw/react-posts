@@ -14,7 +14,7 @@ app.use(express.json());
 // cors(): Lets other websites access your server (important for frontend-backend communication).
 // express.json(): Lets your server understand JSON input (e.g., in POST requests).
 
-const posts = [
+let posts = [
     {id: 1, title: 'first post', body: 'this is my first post'},
     {id: 2, title: 'second post', body: 'this is my second post'},
     {id: 3, title: 'third post', body: 'this is my third post'},
@@ -71,6 +71,26 @@ app.post('/posts', (req, res)=> {
     }
     posts.push(newPost);
     res.status(201).json(newPost);
+})
+
+app.put('/posts/:postId', (req, res) => {
+  const {postId} = req.params;
+  const {title, body} = req.body;
+  const post = posts.find(p => p.id === Number(postId))
+  if(!post) return res.status(404).json({error: 'Post not found'})
+
+  post.title = title;
+  post.body = body;
+
+  res.json(post)
+})
+
+app.delete('/posts/:postId', (req, res) => {
+  const postId = Number(req.params.postId);
+  posts = posts.filter((item) => {
+    return item.id !== postId
+  })
+  res.status(204).end()
 })
 
 app.listen(port, () => {
