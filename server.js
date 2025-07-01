@@ -24,9 +24,9 @@ const posts = [
 // ]
 
 const comments = [
-    {id: 1, name: "Maria", email: "maria@gmail.com", body: 'first comment', postId: 1},
-    {id: 2, name: "Valencio", email: "valencio@gmail.com", body: 'second comment', postId: 2},
-    {id: 3, name: "Jinu", email: "jinu@gmail.com", body: 'third comment', postId: 3}
+    {postId: 1, id: 1, name: "Maria", email: "maria@gmail.com", body: 'first comment'},
+    {postId: 1, id: 2, name: "Valencio", email: "valencio@gmail.com", body: 'second comment'},
+    {postId: 2, id: 1, name: "Jinu", email: "jinu@gmail.com", body: 'third comment'}
 ]
 
 // const comments = [
