@@ -55,7 +55,7 @@ app.get('/posts/:postId/comments', (req, res) => {
   res.json(postComments);
 });
 
-app.post('/posts', (req, res)=> {
+app.post('/posts', async(req, res)=> {
     const {title, content} = req.body;
     // const id = posts.length ? posts[posts.length - 1].id + 1 : 1;
     // const newPost = {
@@ -66,25 +66,41 @@ app.post('/posts', (req, res)=> {
     // posts.push(newPost);
     // res.status(201).json(newPost);
 
-    
+    const createdPost = await Post.create({
+      title,
+      body
+    })
+    res.status(201).json(createdPost);
 })
 
-app.put('/posts/:postId', (req, res) => {
+app.put('/posts/:postId', async (req, res) => {
   const {postId} = req.params;
   const {title, body} = req.body;
-  const post = posts.find(p => p.id === Number(postId))
-  if(!post) return res.status(404).json({error: 'Post not found'})
+  // const post = posts.find(p => p.id === Number(postId))
+  // if(!post) return res.status(404).json({error: 'Post not found'})
 
-  post.title = title;
-  post.body = body;
+  // post.title = title;
+  // post.body = body;
 
-  res.json(post)
+  const updatedPost = await Post.findByIdAndUpdate(postId, {
+    title,
+    body
+  }, {
+    returnDocument: "after"
+  })
+
+  res.json(updatedPost)
 })
 
 app.delete('/posts/:postId', (req, res) => {
   const postId = Number(req.params.postId);
-  posts = posts.filter((item) => {
-    return item.id !== postId
+  // posts = posts.filter((item) => {
+  //   return item.id !== postId
+  // })
+
+  const deletedPost = await Post.findByIdAndDelete(postId, {
+    title,
+    body
   })
   res.status(204).end()
 })
