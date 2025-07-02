@@ -8,6 +8,6 @@ mongoose.connect('mongodb://localhost:27017/react-posts')
             console.log('Server is running on port 3000')
         })
     })
-    .catch((e) => {
-        console.error('Database connection error:', e);
+    .catch((err) => {
+        console.log('Database connection error:', err.message);
     })
