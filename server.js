@@ -2,11 +2,12 @@
 // cors: Middleware to allow requests from other origins (e.g., your frontend website hosted elsewhere)
 
 import express from 'express';
+import mongoose from 'mongoose';
 import {Router} from 'express';
 import cors from 'cors';
 
 const app = express();
-const port = 3000;
+// const port = 3000;
 app.use(cors())
 app.use(express.json());
 
@@ -104,6 +105,17 @@ app.get('/posts', (req, res) => {
   res.json(result)
 });
 
-app.listen(port, () => {
-  console.log(`API server listening on port ${port}`);
-});
+// app.listen(port, () => {
+//   console.log(`API server listening on port ${port}`);
+// });
+
+mongoose.connect('mongodb://localhost:27017/react-posts')
+    .then(() => {
+        console.log('database connected')
+        app.listen(3000, () => {
+            console.log('Server is running on port 3000')
+        })
+    })
+    .catch((e) => {
+        console.error('Database connection error:', e);
+    })
