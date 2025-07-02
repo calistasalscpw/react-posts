@@ -5,6 +5,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import {Router} from 'express';
 import cors from 'cors';
+import Post from './src/models/posts.model.js';
 
 const app = express();
 // const port = 3000;
@@ -24,11 +25,6 @@ let posts = [
 
 //change
 
-// const comments = [
-//     {id: 1, content: 'first comment', postId: 1},
-//     {id: 2, content: 'second comment', postId: 2},
-//     {id: 3, content: 'third comment', postId: 3}
-// ]
 
 const comments = [
     {postId: 1, id: 1, name: "Maria", email: "maria@gmail.com", body: 'first comment'},
@@ -36,12 +32,6 @@ const comments = [
     {postId: 2, id: 1, name: "Jinu", email: "jinu@gmail.com", body: 'third comment ahay'},
     {postId: 3, id: 1, name: "Jinu", email: "jinu@gmail.com", body: 'third comment'}
 ]
-
-// const comments = [
-//   { id: 1, postId: 1, body: 'First' },
-//   { id: 2, postId: 1, body: 'Second' },
-//   { id: 3, postId: 2, body: 'Third' },
-// ];
 
 
 app.get('/', (req, res) => {
@@ -51,10 +41,13 @@ app.get('/posts', (req, res) => {
   res.json(posts);
 });
 
-app.get('/posts/:postId', (req, res) => {
-  const post = posts.find(p => p.id === Number(req.params.postId));
-  if (!post) return res.status(404).json({ error: 'Not found' });
-  res.json(post);
+app.get('/posts/:postId', async (req, res) => {
+  // const post = posts.find(p => p.id === Number(req.params.postId));
+  // if (!post) return res.status(404).json({ error: 'Not found' });
+  // res.json(post);
+
+  const results = await Post.findById(req.params.postId)
+  res.json(results)
 });
 
 app.get('/posts/:postId/comments', (req, res) => {
@@ -64,14 +57,16 @@ app.get('/posts/:postId/comments', (req, res) => {
 
 app.post('/posts', (req, res)=> {
     const {title, content} = req.body;
-    const id = posts.length ? posts[posts.length - 1].id + 1 : 1;
-    const newPost = {
-        id,
-        title,
-        body: content
-    }
-    posts.push(newPost);
-    res.status(201).json(newPost);
+    // const id = posts.length ? posts[posts.length - 1].id + 1 : 1;
+    // const newPost = {
+    //     id,
+    //     title,
+    //     body: content
+    // }
+    // posts.push(newPost);
+    // res.status(201).json(newPost);
+
+    
 })
 
 app.put('/posts/:postId', (req, res) => {
@@ -94,15 +89,26 @@ app.delete('/posts/:postId', (req, res) => {
   res.status(204).end()
 })
 
-app.get('/posts', (req, res) => {
-  const {search} = req.query;
-  let result = posts;
-  if (search) {
-    result = posts.filter(post =>
-      post.title.toLowerCase().includes(search.toLowerCase())
-    )
+app.get('/posts', async (req, res) => {
+  const {keyword} = req.query;
+  // let result = posts;
+  // if (search) {
+  //   result = posts.filter(post =>
+  //     post.title.toLowerCase().includes(search.toLowerCase())
+  //   )
+  // }
+
+  if(!keyword){
+    res.json(await Post.find())
   }
-  res.json(result)
+
+  const findPosts = await Post.find({
+    $or: [
+      {title: {$regex: `.*${keyword}.*`}},
+      {body: {$regex: `.*${keyword}.*`}}
+    ]
+  })
+  res.json(findPosts)
 });
 
 // app.listen(port, () => {
