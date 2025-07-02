@@ -92,7 +92,7 @@ app.put('/posts/:postId', async (req, res) => {
   res.json(updatedPost)
 })
 
-app.delete('/posts/:postId', (req, res) => {
+app.delete('/posts/:postId', async(req, res) => {
   const postId = Number(req.params.postId);
   // posts = posts.filter((item) => {
   //   return item.id !== postId
