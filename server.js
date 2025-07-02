@@ -93,6 +93,17 @@ app.delete('/posts/:postId', (req, res) => {
   res.status(204).end()
 })
 
+app.get('/posts', (req, res) => {
+  const {search} = req.query;
+  let result = posts;
+  if (search) {
+    result = posts.filter(post =>
+      post.title.toLowerCase().includes(search.toLowerCase())
+    )
+  }
+  res.json(result)
+});
+
 app.listen(port, () => {
   console.log(`API server listening on port ${port}`);
 });
