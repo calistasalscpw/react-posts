@@ -20,21 +20,21 @@ router.get('/', async (req, res)=> {
 });
 
 // create a new comment
-// router.post('/', async (req, res)=> {
-//     try {
-//         const {name, email, body} = req.body;
-//         const createdComment = await Comment.create({
-//             name,
-//             email,
-//             body,
-//             post: req.params.postId
-//         });
-//         // posts.push(newPost);
-//         res.status(201).json(createdComment);
-//     } catch (err){
-//         res.status(400).json({message: err.message});
-//     }
-// });
+router.post('/', async (req, res)=> {
+    try {
+        const {name, email, body} = req.body;
+        const createdComment = await Comment.create({
+            name,
+            email,
+            body,
+            post: req.params.postId
+        });
+        // posts.push(newPost);
+        res.status(201).json(createdComment);
+    } catch (err){
+        res.status(400).json({message: err.message});
+    }
+});
 
 
 export default router;

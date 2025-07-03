@@ -34,7 +34,7 @@ const PostDetail = ()=> {
         // fetch(`https://jsonplaceholder.typicode.com/posts/${postId}/comments`)
         fetch(`http://localhost:3000/posts/${postId}/comments`)
         .then(res=> res.json())
-        .then(data => setComments(data));
+        .then(data => setComments(Array.isArray(data) ? data : []));
     }, [postId])
 
     const handleSubmit = async () => {
@@ -58,8 +58,8 @@ const PostDetail = ()=> {
             <CommentList>
                 {/* with the comments that have been set using useEffect,
                 use map to get each comments */}
-                {comments.map(comment => (
-                    <CommentItem key={comment.id} style={{marginBottom: '1rem'}}>
+                {Array.isArray(comments) && comments.map(comment => (
+                    <CommentItem key={comment.id || comment._id} style={{marginBottom: '1rem'}}>
                         <strong style={{color: '#2f27ce', fontSize: '12pt'}}>{comment.name}</strong>
                         <CommentEmail>{comment.email}</CommentEmail>
                         <p>{comment.body}</p>

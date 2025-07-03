@@ -35,7 +35,7 @@ router.get('/', async (req, res)=> {
             findPosts = await Post.find({
                 $or: [
                     {title: {$regex: keyword, $options: 'i'}},
-                    {content: {$regex: keyword, $options: 'i'}}
+                    {body: {$regex: keyword, $options: 'i'}}
                 ]
             });
         } else {
@@ -49,10 +49,10 @@ router.get('/', async (req, res)=> {
 
 router.post('/', async (req, res)=> {
     try {
-    const {title, content} = req.body;
+    const {title, body} = req.body;
     const createdPost = await Post.create({
         title,
-        content
+        body
     })
     // posts.push(newPost);
     res.status(201).json(createdPost);
@@ -64,11 +64,11 @@ router.post('/', async (req, res)=> {
 router.put('/:postId', async (req, res)=> {
     try {
         const postId = req.params.postId;
-        const {title, content} = req.body;
+        const {title, body} = req.body;
 
         const updatedPost = await Post.findByIdAndUpdate(postId, {
             title,
-            content
+            body
         }, {
             returnDocument: "after"
         })

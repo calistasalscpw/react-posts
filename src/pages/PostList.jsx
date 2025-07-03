@@ -52,7 +52,7 @@ const PostList = () => {
             {getPaginatedData(currentPage).map((item)=> (
                 <Card style={{width: '80vw', color: '#050315'}}>
                     <DataLink key={item.id} to={`/posts/${item.id}`}>
-                        {`${item.id} ${item.title}`}
+                        {`${item.title}`}
                     </DataLink>
                 </Card>
             ))}
