@@ -28,20 +28,54 @@ router.use('/:postId/comments', commentRouter)
 
 router.get('/', async (req, res)=> {
     try {
-        const {keyword} = req.query;
-        let findPosts;
-        
-        if (keyword){
-            findPosts = await Post.find({
-                $or: [
+        const keyword = req.query.keyword;
+        const page = Number(req.query.page);
+        const pageSize = Number(req.query.pageSize);
+
+        const skip = (page - 1) * pageSize;
+        //let findPosts;
+
+        if(!keyword){
+            const total = await Post.countDocuments();
+            const findPosts = await Post.find().skip(skip).limit(pageSize)
+            return res.json({
+                data: findPosts,
+                total,
+                page,
+                pageSize
+            })
+        }
+
+        const total = await Post.countDocuments({
+            $or: [
                     {title: {$regex: keyword, $options: 'i'}},
                     {body: {$regex: keyword, $options: 'i'}}
                 ]
-            });
-        } else {
-            findPosts = await Post.find();
-        }
-        res.json(findPosts);
+        })
+
+        const findPosts = await Post.find({
+            $or: [
+                    {title: {$regex: keyword, $options: 'i'}},
+                    {body: {$regex: keyword, $options: 'i'}}
+                ]
+        }).skip(skip).limit(pageSize);
+        
+        // if (keyword){
+        //     findPosts = await Post.find({
+        //         $or: [
+        //             {title: {$regex: keyword, $options: 'i'}},
+        //             {body: {$regex: keyword, $options: 'i'}}
+        //         ]
+        //     });
+        // } else {
+        //     findPosts = await Post.find();
+        // }
+        res.json({
+            data: findPosts,
+            total,
+            page,
+            pageSize
+        });
     } catch (err){
         res.status(500).json({message: err.message});
     }
