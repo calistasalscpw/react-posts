@@ -46,12 +46,12 @@ const PostList = () => {
     return(
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '#dedcff', minHeight: '100vh', minWidth: '100vw'}}>
             <Title style={{color: '#2f27ce'}}>See what's happening around you!</Title>
-            <Search placeholder="Search post..." value={search} allowClear onChange={e => setSearch(e.target.value)} style={{ width: 200 }} />
-            <Button align="right" type="primary" icon={<PlusOutlined />} style={{display: 'flex'}} onClick={() => navigate('/posts/create')}>Add New Post</Button>
+            <Search placeholder="Search post..." value={search} allowClear onChange={e => setSearch(e.target.value)} style={{ width: 200, marginBottom: '1rem' }} />
+            <Button align="right" type="primary" icon={<PlusOutlined />} style={{display: 'flex', marginBottom: '1rem'}} onClick={() => navigate('/posts/create')}>Add New Post</Button>
             {/* Getting each posts from API and displaying them in a list */}
             {getPaginatedData(currentPage).map((item)=> (
                 <Card style={{width: '80vw', color: '#050315'}}>
-                    <DataLink key={item.id} to={`/posts/${item.id}`}>
+                    <DataLink key={item._id} to={`/posts/${item._id}`}>
                         {`${item.title}`}
                     </DataLink>
                 </Card>
