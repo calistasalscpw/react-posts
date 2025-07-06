@@ -1,7 +1,7 @@
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input, Flex } from "antd";
 
-const Signup = ({ onFormSubmit }) => {
+const Login = ({ onFormSubmit }) => {
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
@@ -12,7 +12,7 @@ const Signup = ({ onFormSubmit }) => {
   return (
       <Form
         form={form}
-        name="signup"
+        name="login"
         initialValues={{ remember: true }}
         style={{ maxWidth: 360 }}
         onFinish={onFinish}
@@ -23,12 +23,6 @@ const Signup = ({ onFormSubmit }) => {
           rules={[{ required: true, message: "Please input your Username!" }]}
         >
           <Input prefix={<UserOutlined />} placeholder="Username" />
-        </Form.Item>
-        <Form.Item
-          name="email"
-          rules={[{ required: true, message: "Please input your valid e-mail!" }]}
-        >
-          <Input prefix={<UserOutlined />} placeholder="E-mail" />
         </Form.Item>
         <Form.Item
           name="password"
@@ -49,20 +43,13 @@ const Signup = ({ onFormSubmit }) => {
           </Flex>
         </Form.Item>
         <Form.Item>
-          <Flex justify="space-between" align="center">
-            <Form.Item name="terms" valuePropName="checked" noStyle>
-              <Checkbox>I agree to the Terms and Conditions</Checkbox>
-            </Form.Item>
-          </Flex>
-        </Form.Item>
-        <Form.Item>
           <Button block type="primary" htmlType="submit">
-            Sign Up
+            Log in
           </Button>
-          already have an account? <a href="">Login here!</a>
+          don't have an account? <a href="">Register here!</a>
         </Form.Item>
       </Form>
   );
 };
 
-export default Signup;
+export default Login;

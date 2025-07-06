@@ -9,6 +9,8 @@ import PostDetail from './pages/PostDetail'
 import Navigation from './components/Navigation';
 import PostCreate from './pages/PostCreate';
 import PostModify from './pages/PostModify';
+import Signup from './pages/Signup';
+import Login from './pages/Login';
 
 function App() {
 
@@ -21,6 +23,8 @@ function App() {
           <Route path='/posts/:postId' element={<PostDetail/>}/>
           <Route path='/posts/create' element={<PostCreate/>}/>
           <Route path='/posts/:postId/edit' element={<PostModify/>}/>
+          <Route path='/auth/signup' element={<Signup/>}/>
+          <Route path='/auth/login' element={<Login/>}/>
         </Routes>
       </BrowserRouter>
   )
