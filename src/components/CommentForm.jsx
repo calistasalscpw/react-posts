@@ -1,39 +1,54 @@
-import React from "react";
-import { Button, Checkbox, Form, Input } from "antd";
+import React, {useEffect} from "react";
+import { Button, Form, Input } from "antd";
 
-const CommentForm = () => {
+const {TextArea} = Input;
+
+const CommentForm = ({onFormSubmit, initialValues}) => {
+  const [form] = Form.useForm();
+
+  useEffect(() => {
+    form.setFieldsValue(initialValues);
+  }, [initialValues, form]);
+
+  const onFinish = (values) => {
+    onFormSubmit(values);
+    form.resetFields();
+  }
+
+
   return (
     <Form
-      name="basic"
-      labelCol={{ span: 8 }}
-      wrapperCol={{ span: 16 }}
-      style={{ maxWidth: 600 }}
-      initialValues={{ remember: true }}
+      form={form}
+      layout="vertical"
+      initialValues={initialValues}
       onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
       autoComplete="off"
     >
       <Form.Item
-        label="Username"
-        name="username"
-        rules={[{ required: true, message: "Please input your username!" }]}
+        label="Name"
+        name="name"
+        rules={[{ required: true }]}
       >
         <Input />
       </Form.Item>
 
       <Form.Item
-        label="Password"
-        name="password"
-        rules={[{ required: true, message: "Please input your password!" }]}
+        label="Email"
+        name="email"
+        rules={[{ required: true, type: 'email'}]}
       >
-        <Input.Password />
+        <Input />
       </Form.Item>
 
-      <Form.Item name="remember" valuePropName="checked" label={null}>
-        <Checkbox>Remember me</Checkbox>
+      <Form.Item
+        label="Your Comment"
+        name="body"
+        rules={[{ required: true}]}
+      >
+        <TextArea rows={4} />
       </Form.Item>
 
-      <Form.Item label={null}>
+      <Form.Item>
         <Button type="primary" htmlType="submit">
           Submit
         </Button>
@@ -41,3 +56,5 @@ const CommentForm = () => {
     </Form>
   );
 };
+
+export default CommentForm;

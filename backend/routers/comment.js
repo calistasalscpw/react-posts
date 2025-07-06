@@ -36,5 +36,29 @@ router.post('/', async (req, res)=> {
     }
 });
 
+router.put('/:commentId', async (req, res) => {
+    try {
+        const updatedComment = await Comment.findByIdAndUpdate(
+            req.params.commentId,
+            req.body,
+            {new: true} //return the updated document
+        );
+        if (!updatedComment) return res.status(404).json({message: "Comment not found"});
+        res.json(updatedComment);
+    } catch (err){
+        res.status(400).json({message: err.message})
+    }
+})
+
+router.delete('/:commentId', async (req, res) => {
+    try {
+        const deletedComment = await Comment.findByIdAndDelete(req.params.commentId);
+        if (!deletedComment) return res.status(404).json({message: "Comment not found"});
+        res.status(204).send();
+    } catch (err){
+        res.status(500).json({message: err.message})
+    }
+})
+
 
 export default router;
