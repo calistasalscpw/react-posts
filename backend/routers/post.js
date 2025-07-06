@@ -6,7 +6,6 @@ import Comment from "../models/comments.model.js";
 
 const router = Router();
 
-
 router.get('/:postId', async (req, res)=> {
     // const results = posts.filter((item, idx)=> {
         //     return req.params.postId == item.id

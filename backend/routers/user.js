@@ -21,13 +21,16 @@ router.post("/login", passport.authenticate('local', {
     failureMessage: true,
 }), (req, res)=> {
 
-    res.json('login success');
+    res.json('login success!');
 });
 
 
 router.post("/logout", (req, res)=> {
     req.logout(() => {
-        res.json()
+        res.session.destroy(()=> {
+            res.clearCookie('connect.sid');
+            res.json({ message: 'Logout success!' });
+        })
     });
 })
 
