@@ -45,6 +45,9 @@ const Navigation = () => {
                     <NavLink to={`/posts`}>Posts</NavLink>
                 </NavItem>
                 <NavItem><NavLink to={`/`}>Home</NavLink></NavItem>
+                <NavItem>
+                    <NavLink to={`/auth/login`}>Login</NavLink>
+                </NavItem>
             </NavList>
         </NavBar>
     )
