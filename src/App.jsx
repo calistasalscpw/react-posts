@@ -13,6 +13,9 @@ import Signup from './pages/Signup';
 import Login from './pages/Login';
 
 function App() {
+  const handleLoginSubmit = (values) => {
+    console.log('Login submitted with values:', values);
+  };
 
   return (
       <BrowserRouter>
@@ -24,7 +27,7 @@ function App() {
           <Route path='/posts/create' element={<PostCreate/>}/>
           <Route path='/posts/:postId/edit' element={<PostModify/>}/>
           <Route path='/auth/signup' element={<Signup/>}/>
-          <Route path='/auth/login' element={<Login/>}/>
+          <Route path='/auth/login' element={<Login onFormSubmit={handleLoginSubmit} />}/>
         </Routes>
       </BrowserRouter>
   )

@@ -5,6 +5,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import {Card} from 'antd';
 import styled from 'styled-components';
 import { Pagination } from 'antd';
+import { set } from "mongoose";
 
 const DataLink = styled(Link)`
     text-decoration: none;
@@ -26,12 +27,13 @@ const PostList = () => {
 
     useEffect(()=> {
         // fetch('https://jsonplaceholder.typicode.com/posts')
-        fetch(`http://localhost:3000/posts`)
+        fetch(`http://localhost:3000/posts?keyword=${search}&page=${currentPage}&pageSize=${pageSize}`)
             .then(res=>res.json())
-            .then(data=>setPosts(data))
-
-        console.log(posts)
-    }, [])
+            .then(data=>{
+                setPosts(data.data);
+                setTotal(data.total);
+            })
+    }, [search, currentPage]);
 
     const pageSize = 10;
 
@@ -51,7 +53,7 @@ const PostList = () => {
             {/* Getting each posts from API and displaying them in a list */}
             {getPaginatedData(currentPage).map((item)=> (
                 <Card style={{width: '80vw', color: '#050315'}}>
-                    <DataLink key={item.id} to={`/posts/${item.id}`}>
+                    <DataLink key={item._id} to={`/posts/${item._id}`}>
                         {`${item.title}`}
                     </DataLink>
                 </Card>
