@@ -3,8 +3,8 @@ import styled from 'styled-components';
 
 const NavBar = styled.nav`
     background-color: #dedcff;
-    width: 100%;
-    marginL 0;
+    width: 100vw;
+    margin: 0;
 `
 
 const NavList = styled.ul`
