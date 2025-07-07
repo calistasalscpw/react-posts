@@ -1,5 +1,5 @@
-import Post from './../models/posts.model';
-export async function isUserValidation (req, res, next){
+import Post from '../models/posts.model.js';
+export async function isUserValidator (req, res, next){
 
     const user = req.user;
     if (!user){

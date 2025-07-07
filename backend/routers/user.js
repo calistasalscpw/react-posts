@@ -1,8 +1,8 @@
 import { Router } from "express";
 import bcrypt from "bcrypt";
 import User from "../models/users.model.js";
-import passport from "../config/passport.js"
-import jwt from "jsonwebtoken"
+import passport from "../config/passport.js";
+import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer"
 
 const router = Router();
@@ -34,13 +34,14 @@ router.post("/login", passport.authenticate("local", {
     res.json({message: 'login success!'})
 })
 
-router.post("/logout", (req, res)=> {
-    req.logout(()=> {
-        req.session.destroy(()=> {
-            res.clearCookie('connect.sid');
-            res.json({message: 'logout!'})
-        })
-    })
+router.post("/logout", (req, res, next)=> {
+    try {
+    // The only task is to clear the cookie containing the JWT
+    res.clearCookie("token");
+    res.status(200).json({ message: "Logout successful" });
+  } catch (err) {
+    next(err);
+  }
 })
 
 const transporter = nodemailer.createTransport({
