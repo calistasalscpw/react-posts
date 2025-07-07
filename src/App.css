@@ -1,3 +1,9 @@
 body {
-    background-color: #dedcff;
+  margin: 0;
+  padding: 0;
+  background-color: #dedcff; 
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
 }
