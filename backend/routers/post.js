@@ -2,6 +2,8 @@ import { Router } from "express";
 import commentRouter from './comment.js'
 import Post from "../models/posts.model.js";
 import Comment from "../models/comments.model.js";
+import {isSameUserValidator, isUserValidator} from "../validators/post.validator.js";
+import User from "../models/users.model.js";
 
 
 const router = Router();
@@ -80,21 +82,25 @@ router.get('/', async (req, res)=> {
     }
 })
 
-router.post('/', async (req, res)=> {
+router.post('/', isUserValidator, async (req, res)=> {
     try {
-    const {title, body} = req.body;
-    const createdPost = await Post.create({
-        title,
-        body
-    })
-    // posts.push(newPost);
-    res.status(201).json(createdPost);
+        const {title, body} = req.body;
+        const createdPost = await Post.create({
+            title,
+            body,
+            author: req.user._id
+        })
+        await User.findByIdAndUpdate(req.user._id, {
+            $push: {posts: createdPost._id}
+        })
+        // posts.push(newPost);
+        res.status(201).json(createdPost);
     } catch (err){
         res.status(400).json({message: err.message});
     }
 })
 
-router.put('/:postId', async (req, res)=> {
+router.put('/:postId', isUserValidator, async (req, res)=> {
     try {
         const postId = req.params.postId;
         const {title, body} = req.body;
@@ -120,6 +126,11 @@ router.delete("/:postId", async (req, res)=> {
         // posts = posts.filter((item, idx)=> {
         //     return item.id !== postId;
         // })
+        await User.findByIdAndUpdate(deletedPost.author, {
+            $pull: {
+                posts: req.params.postId
+            }
+        })
 
         if (!deletedPost){
             return res.status(404).json({error: 'Post not found'});
