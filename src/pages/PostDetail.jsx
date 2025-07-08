@@ -101,15 +101,20 @@ const PostDetail = ()=> {
 
     if (!post) return <p>Loading...</p>
 
+    const isAuthor = user && user._id === post.authorId;
+
     return(
         <div style={{padding: '20px', backgroundColor: 'white', color: '#050315'}}>
             <Card>
                 <Title level={2}>{post.title}</Title>
+                <Paragraph>By: {post.author ? post.author.username : 'Unknown'}</Paragraph>
                 <Paragraph>{post.body}</Paragraph>
+                {isAuthor && (
                 <div style={{display: 'flex', gap: '1rem', width: '100%', justifyContent: 'flex-end', marginBottom: '1rem'}}>
                     <Button align="right" icon={<EditOutlined />} onClick={() => navigate(`/posts/${postId}/edit`)}>Edit Post</Button>
                     <Button align="right" icon={<DeleteOutlined />} danger onClick={handleDeletePost}>Delete Post</Button>
                 </div>
+                )}
             </Card>
       
             <Card title={<Title level={4}>Comments ({comments.length})</Title>} style={{border: '0.5px solid #2f27ce', marginTop: '2rem'}}>
