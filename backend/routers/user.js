@@ -39,7 +39,7 @@ router.post("/login", passport.authenticate("local", {
         };
     }
     res.cookie("token", token)
-    res.json({message: 'login success!'})
+    res.json({message: 'login success!', user: user})
 })
 
 router.post("/logout", (req, res, next)=> {
