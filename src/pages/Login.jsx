@@ -2,6 +2,7 @@ import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input, Flex, Card, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -41,7 +42,7 @@ const Login = () => {
           </Form.Item>
           <Form.Item>
             <Button block type="primary" htmlType="submit">Log in</Button>
-            Don't have an account? <a href="/auth/signup">register now!</a>
+            Don't have an account? <Link to="/auth/signup">Register here!</Link>
           </Form.Item>
         </Form>
       </Card>

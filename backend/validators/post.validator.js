@@ -1,10 +1,11 @@
 import Post from '../models/posts.model.js';
-export async function isUserValidator (req, res, next){
-
-    const user = req.user;
-    if (!user){
-        res.json({ message: 'You are not authorized. Please login.' });
-    } next ();
+export async function isUserValidator(req, res, next) {
+  const user = req.user;
+  if (!user) {
+    // You need to stop the execution here!
+    return res.status(401).json({ message: "You are not authorized. Please login." });
+  }
+  next();
 }
 
 export async function isSameUserValidator(req, res, next){
