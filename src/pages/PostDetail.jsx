@@ -3,7 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import styled from 'styled-components';
 import {Card, Button, Modal, Typography} from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import CommentForm from "../components/CommentForm"
+import CommentForm from "../components/CommentForm";
+import { useAuth } from "../context/AuthContext";
 
 const {Title, Paragraph} = Typography;
 
@@ -27,6 +28,7 @@ const PostDetail = ()=> {
     const [comments, setComments] = useState([]);
     const [editingComment, setEditingComment] = useState(null);
     const navigate = useNavigate();
+    const { user } = useAuth();
 
     useEffect(() => {
         // fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`)
@@ -47,7 +49,7 @@ const PostDetail = ()=> {
             okText: 'Yes, Delete',
             okType: 'danger',
             onOk: async () => {
-                await fetch(`http://localhost:3000/posts/${postId}`, { method: 'DELETE' });
+                await fetch(`http://localhost:3000/posts/${postId}`, { method: 'DELETE', credentials: 'include' });
                 navigate('/posts');
             }
         });

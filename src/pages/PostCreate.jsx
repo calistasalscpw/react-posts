@@ -19,6 +19,7 @@ const PostCreate = () => {
         await fetch('http://localhost:3000/posts', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
+            credentials: 'include', 
             body: JSON.stringify({ title, body: content })
         });
         setTitle('');

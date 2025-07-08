@@ -15,7 +15,7 @@ router.get('/:postId', async (req, res)=> {
         // use async and await because it's promise type
         
         try {
-            const results = await Post.findById(req.params.postId);
+            const results = await Post.findById(req.params.postId).populate('author', 'username');
             if (!results) {
                 return res.status(404).json({error: 'Post not found'});
             }
@@ -100,7 +100,7 @@ router.post('/', isUserValidator, async (req, res)=> {
     }
 })
 
-router.put('/:postId', isUserValidator, async (req, res)=> {
+router.put('/:postId', isSameUserValidator, async (req, res)=> {
     try {
         const postId = req.params.postId;
         const {title, body} = req.body;
@@ -120,7 +120,7 @@ router.put('/:postId', isUserValidator, async (req, res)=> {
     }
 })
 
-router.delete("/:postId", async (req, res)=> {
+router.delete("/:postId", isSameUserValidator, async (req, res)=> {
    try {
         const deletedPost = await Post.findByIdAndDelete(req.params.postId);
         // posts = posts.filter((item, idx)=> {

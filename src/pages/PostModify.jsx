@@ -30,6 +30,7 @@ const PostModify = () => {
         const response = await fetch(`http://localhost:3000/posts/${postId}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
+            credentials: 'include', 
             body: JSON.stringify({ title, body: content })
         });
         if (response.ok){

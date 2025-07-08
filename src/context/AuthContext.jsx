@@ -10,7 +10,9 @@ export const AuthProvider = ({ children }) => {
     // This function will be called from the Login page
     const login = async (credentials) => {
     // The response from a successful login will now contain the user data
-    const { data } = await axios.post('http://localhost:3000/auth/login', credentials);
+    const { data } = await axios.post('http://localhost:3000/auth/login', credentials, {
+        withCredentials: true 
+    });
     
     // Set the user state directly from the response
     if (data.user) {
@@ -27,7 +29,9 @@ export const AuthProvider = ({ children }) => {
 
     const logout = async () => {
         try {
-            await axios.post('http://localhost:3000/auth/logout');
+            await axios.post('http://localhost:3000/auth/logout',{}, {
+                withCredentials: true
+            });
             setUser(null); // Clear user state
         } catch (error) {
             console.error('Logout failed:', error);
