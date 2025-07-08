@@ -22,7 +22,7 @@ const PostList = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     const [search, setSearch] = useState(searchParams.get('keyword') || '');
     const [currentPage, setCurrentPage] = useState(Number(searchParams.get('page')) || 1);
-    const pageSize = 10; // Keep pageSize constant for simplicity
+    const [pageSize, setPageSize] = useState(Number(searchParams.get('pageSize')) || 10);
 
     useEffect(() => {
         // Fetch data using the component's state
