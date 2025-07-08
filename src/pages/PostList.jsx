@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { Typography, Button, Input, Card, Pagination } from "antd";
 import { PlusOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
@@ -14,34 +14,51 @@ const { Search } = Input;
 
 const PostList = () => {
     const [posts, setPosts] = useState([]);
-    const [total, setTotal] = useState(0); // State for total posts
+    const [total, setTotal] = useState(0);
     const { Title } = Typography;
-    const [currentPage, setCurrentPage] = useState(1);
     const navigate = useNavigate();
-    const [search, setSearch] = useState('');
-    const pageSize = 10;
+    
+    // Read initial values from the URL
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [search, setSearch] = useState(searchParams.get('keyword') || '');
+    const [currentPage, setCurrentPage] = useState(Number(searchParams.get('page')) || 1);
+    const pageSize = 10; // Keep pageSize constant for simplicity
 
     useEffect(() => {
-        // Fetch paginated and searched data from the backend
+        // Fetch data using the component's state
         fetch(`http://localhost:3000/posts?keyword=${search}&page=${currentPage}&pageSize=${pageSize}`)
             .then(res => res.json())
             .then(data => {
-                setPosts(data.data); 
-                setTotal(data.total); 
+                setPosts(data.data);
+                setTotal(data.total);
             });
-    }, [search, currentPage]); // Re-fetch when search or page changes
+            
+        // Update the URL to match the component's state
+        setSearchParams({ keyword: search, page: currentPage });
+
+    }, [search, currentPage, setSearchParams]);
+
+    const handleSearch = (value) => {
+        setSearch(value);
+        setCurrentPage(1); // Reset to page 1 for new searches
+    };
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '#dedcff', minHeight: '100vh', minWidth: '100vw' }}>
             <Title style={{ color: '#2f27ce' }}>See what's happening around you!</Title>
-            <Search placeholder="Search post..." allowClear onSearch={value => setSearch(value)} style={{ width: 200, marginBottom: '1rem' }} />
-            <Button align="right" type="primary" icon={<PlusOutlined />} style={{ display: 'flex' }} onClick={() => navigate('/posts/create')}>Add New Post</Button>
+            <Search 
+                placeholder="Search post..." 
+                allowClear 
+                defaultValue={search} 
+                onSearch={handleSearch} 
+                style={{ width: 200, marginBottom: '1rem' }} 
+            />
+            <Button type="primary" icon={<PlusOutlined />} onClick={() => navigate('/posts/create')}>Add New Post</Button>
             
-            {/* Map directly over the 'posts' state */}
             {posts.map((item) => (
                 <Card key={item._id} style={{ width: '80vw', color: '#050315', marginTop: '1rem' }}>
                     <DataLink to={`/posts/${item._id}`}>
-                        {`${item.title}`}
+                        {item.title}
                     </DataLink>
                 </Card>
             ))}
@@ -50,7 +67,7 @@ const PostList = () => {
                 align="center" 
                 current={currentPage} 
                 pageSize={pageSize} 
-                total={total} // Use the 'total' state here
+                total={total}
                 onChange={(page) => setCurrentPage(page)} 
                 style={{ margin: '2rem' }} 
             />
