@@ -21,7 +21,6 @@ router.post("/signup", async (req, res)=> {
 })
 
 router.post("/login", passport.authenticate("local", {
-    failureMessage: true,
     session: false
 }), (req, res) => {
     let token = null;
