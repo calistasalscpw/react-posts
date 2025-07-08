@@ -9,12 +9,16 @@ export const AuthProvider = ({ children }) => {
 
     // This function will be called from the Login page
     const login = async (credentials) => {
-        
-        const { data } = await axios.post('http://localhost:3000/auth/login', credentials);
-        // After login, get the user's data to update the state
-        await checkUserSession();
-        return data;
-    };
+    // The response from a successful login will now contain the user data
+    const { data } = await axios.post('http://localhost:3000/auth/login', credentials);
+    
+    // Set the user state directly from the response
+    if (data.user) {
+        setUser(data.user);
+    }
+
+    return data;
+};
 
     // This function will be called from the Signup page
     const signup = async (userInfo) => {

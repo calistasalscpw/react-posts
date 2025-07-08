@@ -24,10 +24,19 @@ router.post("/login", passport.authenticate("local", {
     session: false
 }), (req, res) => {
     let token = null;
+    let user = null;
+
     if(req.user) {
         const _id = req.user._id;
         const payload = {_id};
-        token = jwt.sign(payload, process.env.JWT_SECRET_KEY)
+        token = jwt.sign(payload, process.env.JWT_SECRET_KEY);
+
+        // Prepare user object for the response (without the password)
+        user = {
+            _id: req.user._id,
+            username: req.user.username,
+            email: req.user.email
+        };
     }
     res.cookie("token", token)
     res.json({message: 'login success!'})
