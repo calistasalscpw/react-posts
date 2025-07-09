@@ -81,13 +81,16 @@ const PostDetail = ()=> {
     const handleDeleteComment = async (commentId) => {
         Modal.confirm({
             title: 'Delete this comment?',
+            content: 'This will also delete all associated comments.',
             okText: 'Delete',
             okType: 'danger',
             onOk: async () => {
                 await fetch(`http://localhost:3000/posts/${postId}/comments/${commentId}`, {
-                    method: 'DELETE'
+                    method: 'DELETE',
+                    credentials: 'include'
                 })
-                setComments(comments.filter(c => c._id !== commentId))
+                setComments(comments.filter(c => c._id !== commentId));
+                navigate(`/posts`)
             }
         })
     }
