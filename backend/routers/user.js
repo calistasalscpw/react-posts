@@ -130,10 +130,9 @@ router.get("/login/google/callback",
             const payload = {_id};
             token = jwt.sign(payload, process.env.JWT_SECRET_KEY)
             res.cookie("token", token)
-            res.redirect("https://localhost:5173/posts")
-            res.json({message: 'login success!'})
+            res.redirect("http://localhost:5173/posts")
         } else {
-            res.redirect("https://localhost:5173/auth/login?error=google-auth-failed");
+            res.redirect("http://localhost:5173/auth/login?error=google-auth-failed");
         }
     }
 )
