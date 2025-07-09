@@ -1,12 +1,20 @@
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input, Flex, Card, message } from "antd";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
 const Login = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
+  const [searchParams] = useSearchParams();
+
+  useEffect(()=> {
+    if (searchParams.get('verified')){
+      message.success('Email verified successfully! You can now log in.');
+    }
+  }, [searchParams])
 
   const onFinish = async (values) => {
     try {

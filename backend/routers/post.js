@@ -126,25 +126,22 @@ router.delete("/:postId", isSameUserValidator, async (req, res)=> {
         // posts = posts.filter((item, idx)=> {
         //     return item.id !== postId;
         // })
+        if (!deletedPost){
+            return res.status(404).json({error: 'Post not found'});
+        }
+        
         await User.findByIdAndUpdate(deletedPost.author, {
             $pull: {
                 posts: req.params.postId
             }
         })
 
-        if (!deletedPost){
-            return res.status(404).json({error: 'Post not found'});
-        }
 
         //also delete all comments related to this post
         await Comment.deleteMany({post: req.params.postId});
 
         //success response
-        res.status(204).json({
-            success: true,
-            message: 'Post deleted successfully',
-            post: deletedPost
-        });
+        res.status(204).send();
     } catch (err) {
         console.error("Delete post error:", err);
         res.status(500).json({
