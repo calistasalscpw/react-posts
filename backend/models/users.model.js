@@ -25,7 +25,11 @@ const UserSchema = new Schema(
             default: "normal"
         },
         socialId: String,
-        posts: [{type: mongoose.Schema.Types.ObjectId, ref: "Post"}]
+        posts: [{type: mongoose.Schema.Types.ObjectId, ref: "Post"}],
+        isVerified: {
+            type: Boolean,
+            default: false
+        }
     }
 )
 UserSchema.pre("save", async function () {

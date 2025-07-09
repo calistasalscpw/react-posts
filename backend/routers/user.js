@@ -11,14 +11,54 @@ const router = Router();
 router.post("/signup", async (req, res)=> {
     const {email, username, password} = req.body;
 
+    const existingUser = await User.findOne({ email });
+    if (existingUser){
+        return res.status(400).json({message: "Email already exists"});
+    }
+
     // const hashedPassword = await bcrypt.hash(password, 10)
     const user = await User.create({
         username,
         email,
         password
     })
-    res.status(201).json(user)
+
+    const verificationToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET_KEY, { expiresIn: '1d' });
+    const verificationLink = `http://localhost:3000/auth/verify-email?token=${verificationToken}`;
+
+    await transporter.sendMail({
+        from: '"KADA Blog" <calistasalsa.cpw@gmail.com>',
+        to: user.email,
+        subject: "Verify your email for KADA Blog",
+        html: `
+            <p>Hello, ${user.username}</p>
+            <p>Thank you for registering on KADA Blog. Please click the link below to verify your email address:</p>
+            <a href="${verificationLink}">${verificationLink}</a>
+            <p>This link will expire in 24 hours.</p>
+        `
+    })
+
+    res.status(201).json({message: "User created successfully, please check your email to verify your account."});
 })
+
+router.get("/verify-email", async (req, res) => {
+    const { token } = req.query;
+    if (!token) {
+        return res.status(400).json({ message: "Verification token not provided" });
+    }
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+        const user = await User.findById(decoded.userId);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        user.isVerified = true;
+        await user.save();
+        res.redirect("http://localhost:5173/auth/login?verified=true");
+    } catch (err){
+        res.status(400).json({ message: "Invalid or expired verification token" });
+    }
+});
 
 router.post("/login", passport.authenticate("local", {
     session: false
@@ -27,6 +67,10 @@ router.post("/login", passport.authenticate("local", {
     let user = null;
 
     if(req.user) {
+        if (!req.user.isVerified){
+            return res.status(401).json({message: "Please verify your email before logging in."});
+        }
+        
         const _id = req.user._id;
         const payload = {_id};
         token = jwt.sign(payload, process.env.JWT_SECRET_KEY);
@@ -85,9 +129,12 @@ router.get("/login/google/callback",
             const _id = req.user._id;
             const payload = {_id};
             token = jwt.sign(payload, process.env.JWT_SECRET_KEY)
+            res.cookie("token", token)
+            res.redirect("https://localhost:5173/posts")
+            res.json({message: 'login success!'})
+        } else {
+            res.redirect("https://localhost:5173/auth/login?error=google-auth-failed");
         }
-        res.cookie("token", token)
-        res.json({message: 'login success!'})
     }
 )
 
