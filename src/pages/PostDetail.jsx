@@ -5,6 +5,7 @@ import {Card, Button, Modal, Typography} from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import CommentForm from "../components/CommentForm";
 import { useAuth } from "../context/AuthContext";
+import axios from 'axios';
 
 const {Title, Paragraph} = Typography;
 
@@ -49,8 +50,14 @@ const PostDetail = ()=> {
             okText: 'Yes, Delete',
             okType: 'danger',
             onOk: async () => {
-                await fetch(`http://localhost:3000/posts/${postId}`, { method: 'DELETE', credentials: 'include' });
-                navigate('/posts');
+                try {
+                    await axios.delete(`http://localhost:3000/posts/${postId}`, {
+                        withCredentials: true
+                    })
+                    navigate('/posts');
+                } catch (err){
+                    console.log("Delete post error:", err);
+                }
             }
         });
     }
