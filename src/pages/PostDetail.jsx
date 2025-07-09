@@ -54,7 +54,6 @@ const PostDetail = ()=> {
                     await axios.delete(`http://localhost:3000/posts/${postId}`, {
                         withCredentials: true
                     })
-                    navigate('/posts');
                 } catch (err){
                     console.log("Delete post error:", err);
                 }
