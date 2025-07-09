@@ -101,7 +101,7 @@ const PostDetail = ()=> {
 
     if (!post) return <p>Loading...</p>
 
-    const isAuthor = user && user._id === post.authorId;
+    const isAuthor = user && post.author && user._id === post.author._id;
 
     return(
         <div style={{padding: '20px', backgroundColor: 'white', color: '#050315'}}>
