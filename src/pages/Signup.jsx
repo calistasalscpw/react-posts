@@ -1,5 +1,5 @@
-import { LockOutlined, UserOutlined, MailOutlined } from "@ant-design/icons"; // Add MailOutlined
-import { Button, Form, Input, Card, message } from "antd";
+import { LockOutlined, UserOutlined, MailOutlined, GoogleOutlined } from "@ant-design/icons"; // Add MailOutlined
+import { Button, Form, Divider, Input, Card, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
@@ -17,6 +17,10 @@ const Signup = () => {
         }
     };
 
+    const handleGoogleLogin = () => {
+        window.location.href = 'http://localhost:3000/auth/login/google';
+    }
+
   return (
       <div style={{backgroundColor: '#dedcff', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '90vh'}}>
             <Card title="Sign Up" style={{ width: 400 }}>
@@ -32,9 +36,15 @@ const Signup = () => {
                     </Form.Item>
                     <Form.Item>
                         <Button block type="primary" htmlType="submit">Sign Up</Button>
-                        Already have an account? <a href="/auth/login">Login here!</a>
                     </Form.Item>
                 </Form>
+                <Divider>Or</Divider>
+                <Button block icon={<GoogleOutlined />} onClick={handleGoogleLogin}>
+                    Sign up with Google
+                </Button>
+                <div style={{marginTop: '1rem', textAlign: 'center'}}>
+                    Already have an account? <a href="/auth/login">Login here!</a>
+                </div>
             </Card>
         </div>
   );
