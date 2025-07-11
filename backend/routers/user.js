@@ -3,13 +3,15 @@ import bcrypt from "bcrypt";
 import User from "../models/users.model.js";
 import passport from "../config/passport.js";
 import jwt from "jsonwebtoken";
-import nodemailer from "nodemailer"
+import nodemailer from "nodemailer";
+import upload from "../modules/upload.module.js"
 
 const router = Router();
 
 
-router.post("/signup", async (req, res)=> {
+router.post("/signup", upload.single('profileImage'), async (req, res)=> {
     const {email, username, password} = req.body;
+    const profileImageUrl = req.file ? req.file.location : undefined;
 
     const existingUser = await User.findOne({ email });
     if (existingUser){
@@ -20,7 +22,8 @@ router.post("/signup", async (req, res)=> {
     const user = await User.create({
         username,
         email,
-        password
+        password,
+        profileImageUrl
     })
 
     const verificationToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET_KEY, { expiresIn: '1d' });
