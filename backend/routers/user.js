@@ -9,7 +9,7 @@ import upload from "../modules/upload.module.js"
 const router = Router();
 
 
-router.post("/signup", upload.single('profileImage'), async (req, res)=> {
+router.post("/signup", upload.single('profileImageUrl'), async (req, res)=> {
     const {email, username, password} = req.body;
     const profileImageUrl = req.file ? req.file.location : undefined;
 
