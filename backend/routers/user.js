@@ -8,6 +8,13 @@ import upload from "../modules/upload.module.js"
 
 const router = Router();
 
+const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+        user: "calistasalsa.cpw@gmail.com",
+        pass: process.env.GOOGLE_APP_PASSWORD
+    }
+})
 
 router.post("/signup", upload.single('profileImageUrl'), async (req, res)=> {
     const {email, username, password} = req.body;
@@ -99,13 +106,6 @@ router.post("/logout", (req, res, next)=> {
   }
 })
 
-const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-        user: "calistasalsa.cpw@gmail.com",
-        pass: process.env.GOOGLE_APP_PASSWORD
-    }
-})
 
 router.post("/send-email", async(req, res)=> {
     const {to, subject, text} = req.body;
