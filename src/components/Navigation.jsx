@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { Dropdown, Menu, Button, Spin } from "antd";
+import { Dropdown, Menu, Button, Spin, Avatar } from "antd";
 import { UserOutlined, LogoutOutlined } from "@ant-design/icons";
 import { useAuth } from "../context/AuthContext";
 
@@ -94,7 +94,7 @@ const Navigation = () => {
             ) : user ? (
               <Dropdown overlay={menu} placement="bottomRight">
                 <UserDropdownButton ghost>
-                  <UserOutlined style={{ marginRight: "8px" }} />
+                  <Avatar src={user.profileImageUrl} icon={<UserOutlined/>} style={{marginRight: "8px"}} />
                   Hello, {user.username}
                 </UserDropdownButton>
               </Dropdown>

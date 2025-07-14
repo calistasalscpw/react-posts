@@ -75,7 +75,7 @@ const Signup = () => {
     <div style={{ backgroundColor: '#dedcff', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '90vh' }}>
       <Card title="Sign Up" style={{ width: 400 }}>
         <Form name="signup" onFinish={onFinish} autoComplete="off">
-          <Flex gap="middle" wrap>
+          <Flex gap="middle" wrap justify="center" style={{ marginBottom: '1rem'}}>
             <Upload
               name="avatar"
               listType="picture-card"

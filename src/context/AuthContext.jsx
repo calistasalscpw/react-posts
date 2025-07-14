@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
-import axios from 'axios'; 
+import axios from 'axios';
 
 const AuthContext = createContext(null);
 
@@ -9,18 +9,18 @@ export const AuthProvider = ({ children }) => {
 
     // This function will be called from the Login page
     const login = async (credentials) => {
-    // The response from a successful login will now contain the user data
-    const { data } = await axios.post('http://localhost:3000/auth/login', credentials, {
-        withCredentials: true 
-    });
-    
-    // Set the user state directly from the response
-    if (data.user) {
-        setUser(data.user);
-    }
+        // The response from a successful login will now contain the user data
+        const { data } = await axios.post('http://localhost:3000/auth/login', credentials, {
+            withCredentials: true
+        });
 
-    return data;
-};
+        // Set the user state directly from the response
+        if (data.user) {
+            setUser(data.user);
+        }
+
+        return data;
+    };
 
     // This function will be called from the Signup page
     const signup = async (userInfo) => {
@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }) => {
 
     const logout = async () => {
         try {
-            await axios.post('http://localhost:3000/auth/logout',{}, {
+            await axios.post('http://localhost:3000/auth/logout', {}, {
                 withCredentials: true
             });
             setUser(null); // Clear user state
@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }) => {
             console.error('Logout failed:', error);
         }
     };
-    
+
     // Checks for a user session when the app loads
     const checkUserSession = async () => {
         try {
