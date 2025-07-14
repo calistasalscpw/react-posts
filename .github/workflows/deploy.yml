@@ -48,8 +48,9 @@ jobs:
             rm -rf react-posts/
             sudo apt install -y unzip
             unzip -o app.zip -d react-posts
+
             cd react-posts
-            cat <<EOF> .env
+            cat <<EOF > backend/.env
             JWT_SECRET_KEY= '${{ secrets.JWT_SECRET_KEY }}'
             GOOGLE_APP_PASSWORD= '${{ secrets.GOOGLE_APP_PASSWORD }}'
             GOOGLE_CLIENT_ID= '${{ secrets.GOOGLE_CLIENT_ID }}'
@@ -60,6 +61,7 @@ jobs:
             AWS_REGION= '${{ secrets.AWS_REGION }}'
             EOF
             
+            cd backend
             sudo apt install -y nodejs npm
             sudo npm ci
             sudo npm i -g pm2
