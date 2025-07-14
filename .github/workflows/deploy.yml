@@ -1,11 +1,14 @@
-name: Deploy Posts App to EC2
+name: Deploy Express App to EC2
+
 on:
   push:
     branches:
       - main
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -45,25 +48,23 @@ jobs:
           script: |
             set -e
             cd ~
-            rm -rf react-posts/
+            rm -rf express-test/
             sudo apt install -y unzip
-            unzip -o app.zip -d react-posts
-
-            cd react-posts
-            cat <<EOF > backend/.env
-            JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }}
-            GOOGLE_APP_PASSWORD=${{ secrets.GOOGLE_APP_PASSWORD }}
-            GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}
-            GOOGLE_SECRET=${{ secrets.GOOGLE_SECRET }}
-            AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}
-            AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            AWS_BUCKET_NAME=${{ secrets.AWS_BUCKET_NAME }}
-            AWS_REGION=${{ secrets.AWS_REGION }}
+            unzip -o app.zip -d express-test
+            cd express-test
+            cat <<EOF> .env
+            JWT_SECRET_KEY= '${{ secrets.JWT_SECRET_KEY }}'
+            GOOGLE_APP_PASSWORD= '${{ secrets.GOOGLE_APP_PASSWORD }}'
+            GOOGLE_CLIENT_ID= '${{ secrets.GOOGLE_CLIENT_ID }}'
+            GOOGLE_SECRET= '${{ secrets.GOOGLE_SECRET }}'
+            AWS_ACCESS_KEY_ID= '${{ secrets.AWS_ACCESS_KEY_ID }}'
+            AWS_SECRET_ACCESS_KEY= '${{ secrets.AWS_SECRET_ACCESS_KEY }}'
+            AWS_BUCKET_NAME= '${{ secrets.AWS_BUCKET_NAME }}'
+            AWS_REGION= '${{ secrets.AWS_REGION }}'
             EOF
             
-            cd backend
             sudo apt install -y nodejs npm
             sudo npm ci
             sudo npm i -g pm2
             pm2 delete all || true
-            pm2 start backend/index.js --name react-posts     
+            pm2 start index.js --name express-test      

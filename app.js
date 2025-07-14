@@ -4,7 +4,7 @@ import userRouter from './routers/user.js'
 import cors from 'cors'
 import session from "express-session"
 import MongStore from "connect-mongo"
-import passport from '../config/passport.js';
+import passport from './config/passport.js';
 import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser'
 
