@@ -62,7 +62,7 @@ jobs:
             EOF
             
             cd backend
-            sudo apt install -y nodejs npm
+            sudo apt install -y nodejs
             sudo npm ci
             sudo npm i -g pm2
             pm2 delete all || true
