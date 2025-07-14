@@ -48,7 +48,7 @@ jobs:
           script: |
             set -e
             cd ~
-            rm -rf react-posts/
+            sudo rm -rf react-posts/
             sudo apt install -y unzip
             unzip -o app.zip -d react-posts
             cd react-posts
