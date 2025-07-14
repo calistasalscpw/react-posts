@@ -40,6 +40,15 @@ jobs:
           port: 22
           script: |
             set -e
+
+            sudo apt-get update
+            sudo apt-get install -y unzip curl
+
+            curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
+            sudo apt-get install -y nodejs
+
+            sudo npm install -g pm2
+
             cd ~
             rm -rf react-posts/
             unzip -o app.zip -d react-posts
