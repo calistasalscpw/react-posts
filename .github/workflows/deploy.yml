@@ -66,4 +66,4 @@ jobs:
             sudo npm ci
             sudo npm i -g pm2
             pm2 delete all || true
-            pm2 start index.js --name react-posts     
+            pm2 start ./index.js --name react-posts     
