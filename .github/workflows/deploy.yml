@@ -48,10 +48,10 @@ jobs:
           script: |
             set -e
             cd ~
-            rm -rf express-test/
+            rm -rf react-posts/
             sudo apt install -y unzip
-            unzip -o app.zip -d express-test
-            cd express-test
+            unzip -o app.zip -d react-posts
+            cd react-posts
             cat <<EOF> .env
             JWT_SECRET_KEY= '${{ secrets.JWT_SECRET_KEY }}'
             GOOGLE_APP_PASSWORD= '${{ secrets.GOOGLE_APP_PASSWORD }}'
@@ -67,4 +67,4 @@ jobs:
             sudo npm ci
             sudo npm i -g pm2
             pm2 delete all || true
-            pm2 start index.js --name express-test      
+            pm2 start index.js --name react-posts      
