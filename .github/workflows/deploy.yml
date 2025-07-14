@@ -51,6 +51,7 @@ jobs:
             sudo rm -rf react-posts/
             sudo apt install -y unzip
             unzip -o app.zip -d react-posts
+            
             cd react-posts
             cat <<EOF> .env
             JWT_SECRET_KEY= '${{ secrets.JWT_SECRET_KEY }}'
