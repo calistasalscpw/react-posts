@@ -63,7 +63,6 @@ jobs:
             AWS_REGION= '${{ secrets.AWS_REGION }}'
             EOF
             
-            sudo apt install -y nodejs npm
             sudo npm ci
             sudo npm i -g pm2
             pm2 delete all || true
