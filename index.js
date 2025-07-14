@@ -4,7 +4,7 @@ dotenv.config();
 import mongoose from "mongoose";
 import app from "./app.js";
 
-mongoose.connect('mongodb://localhost:27017/react-posts')
+mongoose.connect('mongodb+srv://orang1:IqjDxPl28HGdw4tV@cluster0.r3jjxai.mongodb.net/', {dbName: 'react-posts'})
     .then(() => {
         console.log('database connected')
         app.listen(3000, () => {
