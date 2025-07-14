@@ -54,7 +54,7 @@ jobs:
             unzip -o app.zip -d react-posts
             cd react-posts
 
-            cat <<EOF> backend/.env
+            cat <<EOF>backend/.env
             JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }}
             GOOGLE_APP_PASSWORD=${{ secrets.GOOGLE_APP_PASSWORD }}
             GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}
@@ -68,4 +68,4 @@ jobs:
             cd backend
             npm ci
             pm2 delete all || true
-            pm2 start backend/index.js --name react-posts 
+            pm2 start index.js --name react-posts 
